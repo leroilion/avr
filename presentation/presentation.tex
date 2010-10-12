@@ -40,7 +40,7 @@ xleftmargin=+0cm
 \usetheme{Copenhagen}
 \title[Introduction au C avr]{Programmation en C\\Pour avr 8 bits}
 \author{J\'er\'emy Cheynet -- INTech \\ Yann Sionneau -- MiNET}
-\institute{www.club-intech.fr \\ clubcode.minet.net \\ intlab.minet.net}
+\institute{www.club-intech.fr \\ clubcode.minet.net \\ intlab.minet.net \\ github.com/leroilion/avr}
 \date{30 septembre 2010}
 \logo{\includegraphics[height=0.5cm]{image/intech.png}}
 
@@ -103,7 +103,8 @@ xleftmargin=+0cm
 \begin{frame}
   \begin{block}{T\'el\'echarger les sources}
     \pause
-    \hyperlink{https://www-pumba.minet.net/avr/blink.c}{https://www-pumba.minet.net/avr/blink.c}
+    \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}\\
+    Et t\'el\'echarger dans les exemples le code blink.c
   \end{block}
   \pause
   \begin{block}{Compiler les sources}
@@ -254,8 +255,6 @@ int main( void )
   \begin{block}{}
     C'est un octet en m\'emoire\\
     \pause
-    avec un adressage par bit\\
-    \pause
     qui permet de configurer le microcontr\^oleur.
     \pause
   \end{block}
@@ -301,7 +300,7 @@ int main( void )
 \subsection{Le datasheet: la bible du programmateur bas niveau}
 
 \begin{frame}
-  \hyperlink{https://www-pumba.minet.net/avr/Atmegaxx8.pdf}{https://www-pumba.minet.net/avr/Atmegaxx8.pdf}
+  \hyperlink{http://github.com/leroilion/avr/tree/master/datasheet/Atmegaxx8.pdf}{http://github.com/leroilion/avr/tree/master/datasheet/Atmegaxx8.pdf}
   \pause
   \begin{block}{TCCR1A -- TCCR1B (page 132 -- 134)}
     Mode normal (WGMx = 0 ), Source d'horloge (CSx = 101), Pas de comparaison (COMx = 0) 
@@ -392,13 +391,7 @@ ISR( TIMER1_OVF_vect)
   Des exemples simple :\\
    \begin{itemize}
     \pause
-    \item \hyperlink{https://www-pumba.minet.net/avr/blink.c}{https://www-pumba.minet.net/avr/blink.c}
-    \pause
-    \item \hyperlink{https://www-pumba.minet.net/avr/blink\_timer.c}{https://www-pumba.minet.net/avr/blink\_timer.c}
-    \pause
-    \item \hyperlink{https://www-pumba.minet.net/avr/premiercode.c}{https://www-pumba.minet.net/avr/premiercode.c}
-    \pause
-    \item \hyperlink{https://www-pumba.minet.net/avr/serial.c}{https://www-pumba.minet.net/avr/serial.c}
+    \item \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}
    \end{itemize}
 \end{frame}
 
