@@ -1,0 +1,405 @@
+\documentclass{beamer}
+\usepackage[latin9]{inputenc}
+\usepackage[french]{babel}
+\usepackage{color} 
+\usepackage{graphicx} 
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+
+\definecolor{colKeys}{rgb}{0,0,1} 
+\definecolor{colIdentifier}{rgb}{0,0,0} 
+\definecolor{colComments}{rgb}{0,0.5,1} 
+\definecolor{colString}{rgb}{0.6,0.1,0.1} 
+
+\lstset{%configuration de listings 
+float=hbp,% 
+basicstyle=\ttfamily\small, % 
+identifierstyle=\color{colIdentifier}, % 
+keywordstyle=\color{colKeys}, % 
+stringstyle=\color{colString}, % 
+commentstyle=\color{colComments}, % 
+columns=flexible, % 
+tabsize=2, % 
+frame=trBL, % 
+frameround=tttt, % 
+extendedchars=true, % 
+showspaces=false, % 
+showstringspaces=false, % 
+numbers=left, % 
+numberstyle=\tiny, % 
+breaklines=true, % 
+breakautoindent=true, % 
+captionpos=b,% 
+xrightmargin=+0cm, % 
+xleftmargin=+0cm
+} 
+
+
+\usetheme{Copenhagen}
+\title[Introduction au C avr]{Programmation en C\\Pour avr 8 bits}
+\author{J\'er\'emy Cheynet -- INTech \\ Yann Sionneau -- MiNET}
+\institute{www.club-intech.fr \\ clubcode.minet.net \\ intlab.minet.net}
+\date{30 septembre 2010}
+\logo{\includegraphics[height=0.5cm]{image/intech.png}}
+
+
+\begin{document}
+ 
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \tableofcontents[]
+\end{frame}
+
+\section{Les outils de programmation}
+\subsection{Quels sont les outils dont je dispose ?}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Les diff\'erents outils}
+    \begin{itemize}
+      \pause
+      \item avr-gcc (pour la compilation)
+      \pause
+      \item avr-objcopy (pour cr\'eer le fichier hex)
+      \pause
+      \item avrdude (pour flasher)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Exemple d'utilisation}
+
+\begin{frame}
+  \begin{exampleblock}{avr-gcc}
+    \pause
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier1.c\\
+    \pause
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier2.c\\
+    \pause
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -o monappli monfichier1.o monfichier2.o
+  \end{exampleblock}
+  \pause
+  \begin{exampleblock}{avr-objcopy}
+    \pause
+    avr-objcopy -O ihex -R .eeprom monappli main.hex
+  \end{exampleblock}
+  \pause
+  \begin{exampleblock}{avrdude}
+    \pause
+    sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:main.hex
+  \end{exampleblock}
+\end{frame}
+
+\subsection{A vous de jouer}
+
+\begin{frame}
+  \begin{block}{T\'el\'echarger les sources}
+    \pause
+    \hyperlink{https://www-pumba.minet.net/avr/blink.c}{https://www-pumba.minet.net/avr/blink.c}
+  \end{block}
+  \pause
+  \begin{block}{Compiler les sources}
+    \pause
+    avr-gcc -Wall -mmcu=atmega328p -O2 -DF\_CPU=16000000 blink.c -o blink.out
+  \end{block}
+  \pause  
+  \begin{block}{Cr\'eer le fichier hexad\'ecimal}
+    \pause
+    avr-objcopy -O ihex -R .eeprom blink.out blink.hex
+  \end{block}
+  \pause
+  \begin{block}{Flasher l'arduino}
+    \pause
+    sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:blink.hex\\
+    sudo avrdude -c usbtiny -p m328p -U flash:w:blink.hex
+  \end{block}
+\end{frame}
+
+\section{Hello world !}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Structure d'un port}
+
+\begin{frame}
+  \pause
+  \begin{block}{3 registres}
+    \begin{itemize}
+      \pause
+      \item Le registre DDRx\\
+      Registre de configuration du port
+      \pause
+      \item Le registre PORTx\\
+      Registre de sortie du port
+      \pause
+      \item Le registre PINx\\
+      Registre de lecture du port
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Ecrire un 1 ou un 0}
+
+\begin{frame}
+  \pause
+  \begin{block}{Ecrire un 1 logique}
+    \pause
+    monport $|$= ( 1 $<$$<$ monbit );\\
+    \pause
+    \#ifndef sbi\\
+    \#define sbi(port,bit) (port) $|$= (1 $<$$<$ (bit))\\
+    \#endif
+  \end{block}
+  \pause
+  \begin{block}{Ecrire un 0 logique}
+    \pause
+    monport \&= $\sim$( 1 $<$$<$ monbit );\\
+    \pause
+    \#ifndef cbi\\
+    \#define cbi(port,bit) (port) \&= $\sim$(1 $<$$<$ (bit))\\
+    \#endif\\
+  \end{block}
+\end{frame}
+
+
+\subsection{Je te parle}
+
+\begin{frame}
+  \pause
+  \begin{block}{Configuration en sortie du port}
+    \pause
+    DDRB $|$= ( 1 $<$$<$ PORTB5 );
+  \end{block}
+  \pause
+  \begin{block}{Ecriture sur un port}
+    \pause
+    PORTB $|$= ( 1 $<$$<$ PORTB5 ); //Pour mettre le bit 5 du port B \`a 1\\
+    \pause
+    PORTB \&= $\sim$( 1 $<$$<$ PORTB5 ); //Pour mettre \`a 0 
+  \end{block}
+\end{frame}
+
+\subsection{Tu me parles}
+
+\begin{frame}
+  \pause
+  \begin{block}{Configuration du port en entr\'ee}
+    \pause
+    DDRx \&= $\sim$( 1 $<$$<$ PORTxN );
+  \end{block}
+  \pause
+  \begin{block}{Lecture du port}
+    \pause
+    PORTx $|$= ( 1 $<$$<$ PORTxN ); //Pour activer le pull--up\\
+    PORTx \&= $\sim$( 1 $<$$<$ PORTxN ); //Pour d\'esactiver le pull--up\\
+    \pause
+    uint8\_t etat = ( PINx \& ( 1 $<$$<$ PINxN ));
+  \end{block}
+\end{frame}
+
+\subsection{A vous de jouer}
+
+\begin{frame}
+  \underline{Objectif:}\\
+  Faire un programme qui \'eclaire une LED si un boutton est pouss\'e.\\
+  \pause
+  \underline{D\'etails techniques:}\\
+  Utiliser le PORTB5 en sortie, et le PORTB0 en entr\'ee.
+  \pause
+  \begin{alertblock}{Attention}
+    Ne pas oublier le int main() dans le fichier principal.\\
+    Penser \`a rajouter l'include standard io.h
+  \end{alertblock}
+\end{frame}
+
+\lstset{language=c++} 
+\lstset{commentstyle=\textit} 
+\begin{lstlisting}
+#include <avr/io.h>
+int main( void )
+{
+        DDRB |= ( 1 << PORTB5 );
+        DDRB &= ~( 1 << PORTB0 );
+        PORTB |= ( 1 << PORTB0 );
+        while(42)
+        {
+                if( (PINB & ( 1 << PORTB0 )) )
+                        PORTB |= ( 1 << PORTB5 );
+                else
+                        PORTB &= ~( 1 << PORTB5 );
+        }
+        return 0;
+}
+\end{lstlisting} 
+
+\section{C'est bien, mais comment je peux faire un VRAI programme ?}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Qu'est-ce qu'un registe ?}
+
+\begin{frame}
+  \begin{block}{}
+    C'est un octet en m\'emoire\\
+    \pause
+    avec un adressage par bit\\
+    \pause
+    qui permet de configurer le microcontr\^oleur.
+    \pause
+  \end{block}
+  \pause
+  \begin{exampleblock}{SREG -- AVR Status Register}
+    \begin{itemize}
+      \pause
+      \item I (bit 7) -- Global interrupt enable
+      \pause
+      \item T (bit 6) -- Copy storage
+      \pause
+      \item H (bit 5) -- Half carry
+      \pause
+      \item S (bit 4) -- Sign bit
+      \pause
+      \item V (bit 3) -- Overflow bit
+      \pause
+      \item N (bit 2) -- Negative bit
+      \pause
+      \item Z (bit 1) -- Zero bit
+      \pause
+      \item C (bit 0) -- Carry
+    \end{itemize}
+  \end{exampleblock}
+\end{frame}
+
+\subsection{Le fil rouge}
+
+\begin{frame}
+  \underline{Objectif:}\\
+  Faire un programme qui fait clignoter une led en utilisant le TIMER1 sur 16 bits.\\Pour cela, on fera:\\
+  \begin{itemize}
+    \pause
+    \item On activera les interruptions d'overflow du TIMER1
+    \pause
+    \item On fera compter le TIMER1 pour avoir une interruption toutes les secondes.
+    \pause
+    \item On regardera l'\'etat de la PIN associ\'ee \`a la LED pour le changer.
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Le datasheet: la bible du programmateur bas niveau}
+
+\begin{frame}
+  \hyperlink{https://www-pumba.minet.net/avr/Atmegaxx8.pdf}{https://www-pumba.minet.net/avr/Atmegaxx8.pdf}
+  \pause
+  \begin{block}{TCCR1A -- TCCR1B (page 132 -- 134)}
+    Mode normal (WGMx = 0 ), Source d'horloge (CSx = 101), Pas de comparaison (COMx = 0) 
+  \end{block}
+  \pause
+  \begin{block}{TCNT1H -- TCNT1L (page 136) }
+    Incr\'ementation toute les 64$\mu$s \pause $\Longrightarrow$ Compter jusqu'\`a 15625 \pause $\Longrightarrow$ Mettre 49910 = 65535 - 15625 dans TCNT.
+  \end{block}
+  \pause
+  \begin{block}{TIMSK1 (page 137)}
+    Activer l'interruption d'overflow \pause $\Longrightarrow$ Activer TOIE1
+  \end{block}
+\end{frame}
+
+\subsection{Tu me vois, tu me vois plus}
+
+\lstset{language=c++} 
+\lstset{commentstyle=\textit} 
+\begin{lstlisting}
+#include <avr/io.h>
+#include <avr/interrupt.h>
+...
+TCCR1A = 0bxxxxxx00;
+TCCR1B = 0bxxx00101;
+TIMSK1 |= ( 1 << TOIE1 );
+...
+ISR( TIMER1_OVF_vect)
+{ ...
+\end{lstlisting}
+
+\subsection{A vous de jouer}
+
+\begin{frame}
+  \underline{Objectif:}\\
+  Faire un programme qui permet de contr\^oler la luminosit\'e d'une LED en utilisant le PWM.\\
+  \pause
+  \underline{D\'etails techniques:}\\
+  \begin{itemize}
+    \pause
+    \item Utiliser le port B5 pour la sortie de la LED
+    \pause
+    \item Utiliser le TIMER de votre choix en mode PWM
+  \end{itemize}
+
+  \pause
+  \begin{alertblock}{Attention}
+    Ne pas oublier l'include $<$avr/interrupt.h$>$\\
+    Penser \`a g\'erer \emph{TOUS} les vecteurs d'interruption
+  \end{alertblock}
+\end{frame}
+
+\section{Les pi\`eges \`a \'eviter}
+
+\begin{frame}
+  \begin{alertblock}{Les pi\`eges}
+    \pause
+    \begin{itemize}
+     \item \'Economiser la m\'emoire (probl\`eme de la pile)
+     \pause 
+     \item Faire attention avec les \emph{float}, les . et les \emph{double}
+     \pause
+     \item \'Economiser la puissance de calcul (calcul en 8 bits)
+     \pause
+     \item Faire attention \`a l'overflow
+     \pause
+     \item Rajouter l'option \emph{volatile} devant les variables
+    \end{itemize}
+
+  \end{alertblock}
+\end{frame}
+
+
+\section*{Conclusion}
+
+\begin{frame}
+  Nous avons vu :\\
+  \begin{itemize}
+    \pause
+    \item Les outils de programmation
+    \pause
+    \item Comment configurer, lire et \'ecrire sur un port
+    \pause
+    \item Ce qu'est un registre, et comment le configurer \`a l'aide du datasheet
+    \pause
+    \item L'utilisation des interruptions
+  \end{itemize}
+  \pause 
+  Des exemples simple :\\
+   \begin{itemize}
+    \pause
+    \item \hyperlink{https://www-pumba.minet.net/avr/blink.c}{https://www-pumba.minet.net/avr/blink.c}
+    \pause
+    \item \hyperlink{https://www-pumba.minet.net/avr/blink\_timer.c}{https://www-pumba.minet.net/avr/blink\_timer.c}
+    \pause
+    \item \hyperlink{https://www-pumba.minet.net/avr/premiercode.c}{https://www-pumba.minet.net/avr/premiercode.c}
+    \pause
+    \item \hyperlink{https://www-pumba.minet.net/avr/serial.c}{https://www-pumba.minet.net/avr/serial.c}
+   \end{itemize}
+\end{frame}
+
+\end{document}
