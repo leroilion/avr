@@ -1,0 +1,8 @@
+Pour la compilation de ces fichiers, il faut rajouter un define pour le type de carte.
+
+Si c'est une carte arduino, il faut #define ARDUINO.
+Pour une carte arduino mega, il faut #define ARDUINO_MEGA
+
+Pour les #define, soit on le rajoute dans un .h en rajoutant :
+#define ARDUINO
+Soit lors de la compilation, on rajoute -DARDUINO
