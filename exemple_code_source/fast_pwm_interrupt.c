@@ -1,10 +1,17 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#ifdef ARDUINO
+	#define PORT_SORTIE PORTB5
+#endif
+#ifdef ARDUINO_MEGA
+	#define PORT_SORTIE PORTB7
+#endif
+
 int main( void )
 {
 	//Configuration de la pin en sortie
-	DDRB |= ( 1 << PORTB5 );
+	DDRB |= ( 1 << PORT_SORTIE );
 	//Configuration du TIMER0 en mode Fast PWM
 	TCCR0A |= ( 1 << WGM00 );
 	TCCR0A &= ~( 1 << WGM01 );
@@ -32,10 +39,10 @@ int main( void )
 
 ISR( TIMER0_OVF_vect )
 {
-	PORTB &= ~( 1 << PORTB5 );
+	PORTB &= ~( 1 << PORT_SORTIE );
 }
 
 ISR( TIMER0_COMPA_vect )
 {
-	PORTB |= ( 1 << PORTB5 );
+	PORTB |= ( 1 << PORT_SORTIE );
 }
