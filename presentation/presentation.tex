@@ -215,7 +215,7 @@ xleftmargin=+0cm
   Faire un programme qui \'eclaire une LED si un boutton est pouss\'e.\\
   \pause
   \underline{D\'etails techniques:}\\
-  Utiliser le PORTB5 en sortie, et le PORTB0 en entr\'ee.
+  Utiliser le PORTB5 en sortie (PORTB7 pour arduino mega), et le PORTB0 en entr\'ee.
   \pause
   \begin{alertblock}{Attention}
     Ne pas oublier le int main() dans le fichier principal.\\
@@ -340,7 +340,7 @@ ISR( TIMER1_OVF_vect)
   \underline{D\'etails techniques:}\\
   \begin{itemize}
     \pause
-    \item Utiliser le port B5 pour la sortie de la LED
+    \item Utiliser le port B5 pour la sortie de la LED (PORTB7 pour arduino mega).
     \pause
     \item Utiliser le TIMER de votre choix en mode PWM
   \end{itemize}
