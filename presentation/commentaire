@@ -1,0 +1,63 @@
+PART 1
+	-EXEMPLE UTILISATION :
+		* avr-gcc : makefile possible
+		* avr-objcopy : -O (fichier de sortie) ihex (intel hexadecimal) -R .eeprom (sans eeprom)
+	-A VOUS DE JOUER
+		*http://github.com/leroilion/avr/tree/master/exemple_code_source/ (il suffit de cliquer sur exemple_code_source)
+		*Pour la compilation, pensez à rajouter -DARDUINO pour un arduino et -DARDUINO_MEGA pour un arduino mega.
+		Type de puce possible :
+			+atmega168
+			+atmega328p
+			+atmega1280
+		*Pour flasher :
+			+m168
+			+m328p
+			+atmega1280
+PART 2
+	-Différence entre PORT PIN et DDR
+	-Ecrire un 1 logique :
+		+bien faire le schéma du principe du masque
+		+Bien expliquer le #define sbi et cbi
+	-A vous de jouez
+		+Faire le choix entre PORTB5 et 7
+		+Explication de l'exemple
+PART 3
+	-Qu'est ce qu'un registre
+	-SREG
+		+I Prioritaire sur tous les autres bits de validation d'interruption
+		+T Bit de stockage momentané BST copie dedans, BLD le récupère
+		+H indique la retenue du quartet de poid faible
+		+S ou exclusif entre V et N
+		+V overflow ou débordement
+		+N mis à 1 lorsque le résultat d'opération arithmétique est négatif
+		+Z idem, sauf qu'il faut un résultat nul
+		+C Retenue d'opération arithmétique
+	-Datasheet
+		+github.com/leroilion/avr/datasheet/atmega8xx.pdf
+		+Pensez à vraiment faire les va et viens entre slides et datasheet
+		+Bien expliquer au tableau les valeurs choisies (timer par exemple)
+		+Expliquer le ISR(TIMER1_OVF_vect)
+	-Exo
+		+Expliquer le pwm en pour ceux qui ne savent pas
+		+Conseiller le timer 1
+		+conseiller le mode interruption, mais parler du système automatique
+	-Les pièges
+		+Memoire : pile + ram = bug !!!
+		+Pour yann : les float double et . avec chargement en mémoire de tout
+		+puissance très limitée
+		+Bug de l'overflow :
+			uint32_t Temps::conversion_heure_to_timestamp(uint8_t heure, uint8_t minute, uint8_t seconde)
+			{
+        			uint32_t timestamp;
+        			timestamp = heure;
+        			timestamp *= 60;
+        			timestamp += minute;
+        			timestamp *= 60;
+        			timestamp += seconde;
+        			timestamp *= 1000;
+				return timestamp;
+			}
+			OU
+			timestamp = (heure * 3600 + minute * 60 + seconde )* 1000
+		+Pour yann (pourquoi mettre ou non volatile)
+
