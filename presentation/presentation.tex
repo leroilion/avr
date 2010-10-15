@@ -18,8 +18,16 @@
   % 1 ==> Pauses are activated
   % 2 ==> Les pauses sont desactivées
   % 2 ==> Pauses aren't activated
+  %\def\Pause{1}
   \def\Pause{2}
+
+
+  %Variable permettant de choisir la langue (francais ou anglais)
+  %This variable allow to chose the language (english or french)
+  %\def\Language{french}
+  \def\Language{english}
 %fin de zone de configuration de compilation
+%End of the configurate zone
 
 \definecolor{colKeys}{rgb}{0,0,1} 
 \definecolor{colIdentifier}{rgb}{0,0,0} 
@@ -51,12 +59,17 @@ xleftmargin=+0cm
 
 
 \usetheme{Copenhagen}
-\title[Introduction au C avr]{Programmation en C\\Pour avr 8 bits}
+\ifthenelse{\equal{\Language}{french}}
+{
+  \title[Introduction au C avr]{Programmation en C\\Pour avr 8 bits}
+}
+{
+  \title[Introduction to C avr]{Programming C\\On 8 bits avr}
+}
 \author{J\'er\'emy Cheynet -- INTech \\ Yann Sionneau -- MiNET}
 \institute{www.club-intech.fr \\ clubcode.minet.net \\ intlab.minet.net \\ github.com/leroilion/avr \\ www.slideshare.net/leroilion34}
 \date{14 octobre 2010}
 \logo{\includegraphics[height=0.5cm]{image/intech.png}}
-
 
 \begin{document}
  
@@ -67,15 +80,24 @@ xleftmargin=+0cm
 \begin{frame}
   \tableofcontents[]
 \end{frame}
-
+\ifthenelse{\equal{\Language}{french}}
+{
 \section{Les outils de programmation}
 \subsection{Quels sont les outils dont je dispose ?}
+}
+{
+\section{Programming tools}
+\subsection{What are tools I can use ?}
+}
+
 
 \begin{frame}
   \tableofcontents[currentsection]
 \end{frame}
 
 \begin{frame}
+\ifthenelse{\equal{\Language}{french}}
+{
   \begin{block}{Les diff\'erents outils}
     \begin{itemize}
       \ifthenelse{\equal{\Pause}{1}}
@@ -101,9 +123,44 @@ xleftmargin=+0cm
       \item avrdude (pour flasher)
     \end{itemize}
   \end{block}
+}
+{
+  \begin{block}{Differents tools}
+    \begin{itemize}
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
+      \item avr-gcc (to compile the code)
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
+      \item avr-objcopy (to create the hexadecimal file)
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
+      \item avrdude (to flash)
+    \end{itemize}
+  \end{block}
+}
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Exemple d'utilisation}
+}
+{
+\subsection{Use case}
+}
+
 
 \begin{frame}
   \begin{exampleblock}{avr-gcc}
@@ -111,17 +168,17 @@ xleftmargin=+0cm
      {
 	\pause
      }{}
-    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier1.c\\
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c myfile1.c\\
     \ifthenelse{\equal{\Pause}{1}}
      {
 	\pause
      }{}
-    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier2.c\\
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c myfile2.c\\
     \ifthenelse{\equal{\Pause}{1}}
     {
 	\pause
     }{}
-    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -o monappli monfichier1.o monfichier2.o
+    avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 myfile1.o myfile2.o -o myappli 
   \end{exampleblock}
   \ifthenelse{\equal{\Pause}{1}}
   {
@@ -132,7 +189,7 @@ xleftmargin=+0cm
   {
     \pause
   }{}
-    avr-objcopy -O ihex -R .eeprom monappli main.hex
+    avr-objcopy -O ihex -R .eeprom myappli main.hex
   \end{exampleblock}
   \ifthenelse{\equal{\Pause}{1}}
   {
@@ -147,10 +204,19 @@ xleftmargin=+0cm
   \end{exampleblock}
 \end{frame}
 
+
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{A vous de jouer}
+}
+{
+\subsection{Let's play now}
+}
 
 \begin{frame}
-  \begin{block}{T\'el\'echarger les sources}
+\ifthenelse{\equal{\Language}{french}}
+{
+\begin{block}{T\'el\'echarger les sources}
     \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
@@ -192,15 +258,73 @@ xleftmargin=+0cm
     sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:blink.hex\\
     sudo avrdude -c usbtiny -p m328p -U flash:w:blink.hex
   \end{block}
+}
+{
+\begin{block}{T\'el\'echarger les sources}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+    \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}\\
+    Et t\'el\'echarger dans les exemples le code blink.c
+  \end{block}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+  \begin{block}{Compiler les sources}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+    avr-gcc -Wall -mmcu=atmega328p -O2 -DF\_CPU=16000000 blink.c -o blink.out
+  \end{block}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+  \begin{block}{Cr\'eer le fichier hexad\'ecimal}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+    avr-objcopy -O ihex -R .eeprom blink.out blink.hex
+  \end{block}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+  \begin{block}{Flasher l'arduino}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
+    sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:blink.hex\\
+    sudo avrdude -c usbtiny -p m328p -U flash:w:blink.hex
+  \end{block}
+}
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \section{Hello world !}
+}
+{
+\section{Hello world !}
+}
+
 
 \begin{frame}
   \tableofcontents[currentsection]
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Structure d'un port}
+}
+{
+\subsection{Structure d'un port}
+}
 
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
