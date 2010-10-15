@@ -7,6 +7,19 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathptmx}
+\usepackage{ifthen}
+
+%Configuration du slide pour compiler la bonne version en fonction du besoin
+%Part to configure de slide before compilation
+  %Variable permettant d'activer ou non les pauses
+  %This variable allow to activate or not pauses
+
+  % 1 ==> Les pauses sont activées
+  % 1 ==> Pauses are activated
+  % 2 ==> Les pauses sont desactivées
+  % 2 ==> Pauses aren't activated
+  \def\Pause{2}
+%fin de zone de configuration de compilation
 
 \definecolor{colKeys}{rgb}{0,0,1} 
 \definecolor{colIdentifier}{rgb}{0,0,0} 
@@ -65,11 +78,26 @@ xleftmargin=+0cm
 \begin{frame}
   \begin{block}{Les diff\'erents outils}
     \begin{itemize}
-      \pause
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
       \item avr-gcc (pour la compilation)
-      \pause
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
       \item avr-objcopy (pour cr\'eer le fichier hex)
-      \pause
+      \ifthenelse{\equal{\Pause}{1}}
+      {
+	\pause
+      }
+      {
+      }
       \item avrdude (pour flasher)
     \end{itemize}
   \end{block}
@@ -79,21 +107,42 @@ xleftmargin=+0cm
 
 \begin{frame}
   \begin{exampleblock}{avr-gcc}
-    \pause
+    \ifthenelse{\equal{\Pause}{1}}
+     {
+	\pause
+     }{}
     avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier1.c\\
-    \pause
+    \ifthenelse{\equal{\Pause}{1}}
+     {
+	\pause
+     }{}
     avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -c monfichier2.c\\
-    \pause
+    \ifthenelse{\equal{\Pause}{1}}
+    {
+	\pause
+    }{}
     avr-gcc -Wall -mmcu=atmega328p -DF\_CPU=16000000 -o monappli monfichier1.o monfichier2.o
   \end{exampleblock}
-  \pause
-  \begin{exampleblock}{avr-objcopy}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
+  \begin{exampleblock}{avr-objcopy}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
     avr-objcopy -O ihex -R .eeprom monappli main.hex
   \end{exampleblock}
-  \pause
-  \begin{exampleblock}{avrdude}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
+  \begin{exampleblock}{avrdude}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
     sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:main.hex
   \end{exampleblock}
 \end{frame}
@@ -102,23 +151,44 @@ xleftmargin=+0cm
 
 \begin{frame}
   \begin{block}{T\'el\'echarger les sources}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
     \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}\\
     Et t\'el\'echarger dans les exemples le code blink.c
   \end{block}
-  \pause
-  \begin{block}{Compiler les sources}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
+  \begin{block}{Compiler les sources}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
     avr-gcc -Wall -mmcu=atmega328p -O2 -DF\_CPU=16000000 blink.c -o blink.out
   \end{block}
-  \pause  
-  \begin{block}{Cr\'eer le fichier hexad\'ecimal}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
+  \begin{block}{Cr\'eer le fichier hexad\'ecimal}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
     avr-objcopy -O ihex -R .eeprom blink.out blink.hex
   \end{block}
-  \pause
-  \begin{block}{Flasher l'arduino}
+  \ifthenelse{\equal{\Pause}{1}}
+  {
     \pause
+  }{}
+  \begin{block}{Flasher l'arduino}
+    \ifthenelse{\equal{\Pause}{1}}
+  {
+    \pause
+  }{}
     sudo avrdude -P /dev/ttyUSB0 -c stk500v1 -p m328p -b 57600 -D -U flash:w:blink.hex\\
     sudo avrdude -c usbtiny -p m328p -U flash:w:blink.hex
   \end{block}
@@ -133,16 +203,28 @@ xleftmargin=+0cm
 \subsection{Structure d'un port}
 
 \begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{3 registres}
     \begin{itemize}
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item Le registre DDRx\\
       Registre de configuration du port
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item Le registre PORTx\\
       Registre de sortie du port
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item Le registre PINx\\
       Registre de lecture du port
     \end{itemize}
@@ -152,20 +234,38 @@ xleftmargin=+0cm
 \subsection{Ecrire un 1 ou un 0}
 
 \begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Ecrire un 1 logique}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     monport $|$= ( 1 $<$$<$ monbit );\\
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \#ifndef sbi\\
     \#define sbi(port,bit) (port) $|$= (1 $<$$<$ (bit))\\
     \#endif
   \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Ecrire un 0 logique}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     monport \&= $\sim$( 1 $<$$<$ monbit );\\
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \#ifndef cbi\\
     \#define cbi(port,bit) (port) \&= $\sim$(1 $<$$<$ (bit))\\
     \#endif\\
@@ -176,16 +276,31 @@ xleftmargin=+0cm
 \subsection{Je te parle}
 
 \begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Configuration en sortie du port}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     DDRB $|$= ( 1 $<$$<$ PORTB5 );
   \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Ecriture sur un port}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     PORTB $|$= ( 1 $<$$<$ PORTB5 ); //Pour mettre le bit 5 du port B \`a 1\\
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     PORTB \&= $\sim$( 1 $<$$<$ PORTB5 ); //Pour mettre \`a 0 
   \end{block}
 \end{frame}
@@ -193,17 +308,32 @@ xleftmargin=+0cm
 \subsection{Tu me parles}
 
 \begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Configuration du port en entr\'ee}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     DDRx \&= $\sim$( 1 $<$$<$ PORTxN );
   \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{Lecture du port}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     PORTx $|$= ( 1 $<$$<$ PORTxN ); //Pour activer le pull--up\\
     PORTx \&= $\sim$( 1 $<$$<$ PORTxN ); //Pour d\'esactiver le pull--up\\
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     uint8\_t etat = ( PINx \& ( 1 $<$$<$ PINxN ));
   \end{block}
 \end{frame}
@@ -213,10 +343,16 @@ xleftmargin=+0cm
 \begin{frame}
   \underline{Objectif:}\\
   Faire un programme qui \'eclaire une LED si un bouton est pouss\'e.\\
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \underline{D\'etails techniques:}\\
   Utiliser le PORTB5 en sortie (PORTB7 pour arduino mega), et le PORTB0 en entr\'ee.
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{alertblock}{Attention}
     Ne pas oublier le int main() dans le fichier principal.\\
     Penser \`a rajouter l'include standard io.h
@@ -254,28 +390,61 @@ int main( void )
 \begin{frame}
   \begin{block}{}
     C'est un octet en m\'emoire\\
-    \pause
-    qui permet de configurer le microcontr\^oleur.
-    \pause
-  \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
+    qui permet de configurer le microcontr\^oleur.
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
   \begin{exampleblock}{SREG -- AVR Status Register}
     \begin{itemize}
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item I (bit 7) -- Global interrupt enable
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item T (bit 6) -- Copy storage
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item H (bit 5) -- Half carry
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item S (bit 4) -- Sign bit
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item V (bit 3) -- Overflow bit
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item N (bit 2) -- Negative bit
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item Z (bit 1) -- Zero bit
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item C (bit 0) -- Carry
     \end{itemize}
   \end{exampleblock}
@@ -287,11 +456,20 @@ int main( void )
   \underline{Objectif:}\\
   Faire un programme qui fait clignoter une led en utilisant le TIMER1 sur 16 bits.\\Pour cela, on fera:\\
   \begin{itemize}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item On activera les interruptions d'overflow du TIMER1
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item On fera compter le TIMER1 pour avoir une interruption toutes les secondes.
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item On regardera l'\'etat de la PIN associ\'ee \`a la LED pour le changer.
   \end{itemize}
 \end{frame}
@@ -301,15 +479,24 @@ int main( void )
 
 \begin{frame}
   \hyperlink{http://github.com/leroilion/avr/tree/master/datasheet/Atmegaxx8.pdf}{http://github.com/leroilion/avr}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{TCCR1A -- TCCR1B (page 132 -- 134)}
     Mode normal (WGMx = 0 ), Source d'horloge (CSx = 101), Pas de comparaison (COMx = 0) 
   \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{TCNT1H -- TCNT1L (page 136) }
     Incr\'ementation toute les 64$\mu$s \pause $\Longrightarrow$ Compter jusqu'\`a 15625 \pause $\Longrightarrow$ Mettre 49910 = 65535 - 15625 dans TCNT.
   \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{block}{TIMSK1 (page 137)}
     Activer l'interruption d'overflow \pause $\Longrightarrow$ Activer TOIE1
   \end{block}
@@ -336,16 +523,28 @@ ISR( TIMER1_OVF_vect)
 \begin{frame}
   \underline{Objectif:}\\
   Faire un programme qui permet de contr\^oler la luminosit\'e d'une LED en utilisant le PWM.\\
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \underline{D\'etails techniques:}\\
   \begin{itemize}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item Utiliser le port B5 pour la sortie de la LED (PORTB7 pour arduino mega).
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item Utiliser le TIMER de votre choix en mode PWM
   \end{itemize}
 
+\ifthenelse{\equal{\Pause}{1}}
+{
   \pause
+}{}
   \begin{alertblock}{Attention}
     Ne pas oublier l'include $<$avr/interrupt.h$>$\\
     Penser \`a g\'erer \emph{TOUS} les vecteurs d'interruption
@@ -356,16 +555,31 @@ ISR( TIMER1_OVF_vect)
 
 \begin{frame}
   \begin{alertblock}{Les pi\`eges}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \begin{itemize}
      \item \'Economiser la m\'emoire (probl\`eme de la pile)
-     \pause 
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
      \item Faire attention avec les \emph{float}, les . et les \emph{double}
-     \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
      \item \'Economiser la puissance de calcul (calcul en 8 bits)
-     \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
      \item Faire attention \`a l'overflow
-     \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
      \item Rajouter l'option \emph{volatile} devant les variables
     \end{itemize}
 
@@ -378,24 +592,48 @@ ISR( TIMER1_OVF_vect)
 \begin{frame}
   Nous avons vu :\\
   \begin{itemize}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item Les outils de programmation
-    \pause
-    \item Comment configurer, lire et \'ecrire sur un port
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item Ce qu'est un registre, et comment le configurer \`a l'aide du datasheet
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item L'utilisation des interruptions
   \end{itemize}
-  \pause 
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
   Des exemples simple :\\
    \begin{itemize}
-    \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
     \item \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}
    \end{itemize}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
   Bibliographie :\\
     \begin{itemize}
-      \pause
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
       \item \hyperlink{http://www.tavernier-c.com/livres.htm}{\underline{Microcontr\^oleurs AVR : des ATtiny aux ATmega} de Christian Tavernier }
     \end{itemize}
 
