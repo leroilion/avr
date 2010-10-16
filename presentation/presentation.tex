@@ -260,19 +260,19 @@ xleftmargin=+0cm
   \end{block}
 }
 {
-\begin{block}{T\'el\'echarger les sources}
+\begin{block}{Download source code}
     \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
   }{}
     \hyperlink{http://github.com/leroilion/avr}{http://github.com/leroilion/avr}\\
-    Et t\'el\'echarger dans les exemples le code blink.c
+    Download, in code example, the file blink.c
   \end{block}
   \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
   }{}
-  \begin{block}{Compiler les sources}
+  \begin{block}{Source compile}
     \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
@@ -283,7 +283,7 @@ xleftmargin=+0cm
   {
     \pause
   }{}
-  \begin{block}{Cr\'eer le fichier hexad\'ecimal}
+  \begin{block}{Create hexadecimal code}
     \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
@@ -294,7 +294,7 @@ xleftmargin=+0cm
   {
     \pause
   }{}
-  \begin{block}{Flasher l'arduino}
+  \begin{block}{Flash arduino card}
     \ifthenelse{\equal{\Pause}{1}}
   {
     \pause
@@ -305,13 +305,7 @@ xleftmargin=+0cm
 }
 \end{frame}
 
-\ifthenelse{\equal{\Language}{french}}
-{
 \section{Hello world !}
-}
-{
-\section{Hello world !}
-}
 
 
 \begin{frame}
@@ -323,9 +317,11 @@ xleftmargin=+0cm
 \subsection{Structure d'un port}
 }
 {
-\subsection{Structure d'un port}
+\subsection{Port structure}
 }
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
 {
@@ -354,20 +350,63 @@ xleftmargin=+0cm
     \end{itemize}
   \end{block}
 \end{frame}
+}
+{
+\begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{block}{3 registers}
+    \begin{itemize}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+      \item The DDRx register\\
+      This register allow to configure the type of the port (input ou output)
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+      \item The PORTx register\\
+      Output port register
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+      \item The PINx register\\
+      Input port register
+    \end{itemize}
+  \end{block}
+\end{frame}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Ecrire un 1 ou un 0}
+}
+{
+\subsection{Write 1 or 0}
+}
 
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
+\ifthenelse{\equal{\Language}{french}}
+{
   \begin{block}{Ecrire un 1 logique}
+}
+{
+  \begin{block}{Write 1 logical}
+}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
-    monport $|$= ( 1 $<$$<$ monbit );\\
+    myport $|$= ( 1 $<$$<$ mybit );\\
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
@@ -380,12 +419,18 @@ xleftmargin=+0cm
 {
   \pause
 }{}
+\ifthenelse{\equal{\Language}{french}}
+{
   \begin{block}{Ecrire un 0 logique}
+}
+{
+  \begin{block}{Write 0 logical}
+}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
-    monport \&= $\sim$( 1 $<$$<$ monbit );\\
+    myport \&= $\sim$( 1 $<$$<$ mybit );\\
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
@@ -396,8 +441,13 @@ xleftmargin=+0cm
   \end{block}
 \end{frame}
 
-
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Je te parle}
+}
+{
+\subsection{I speak}
+}
 
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
@@ -429,7 +479,13 @@ xleftmargin=+0cm
   \end{block}
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Tu me parles}
+}
+{
+\subsection{I listen}
+}
 
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
