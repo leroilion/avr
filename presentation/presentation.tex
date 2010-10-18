@@ -630,7 +630,7 @@ xleftmargin=+0cm
 {
   \pause
 }{}
-  \begin{alertblock}{be careful}
+  \begin{alertblock}{Be careful}
     Don't forget int main() in the main file.\\
     Don't forget standard include io.h
   \end{alertblock}
@@ -799,22 +799,28 @@ int main( void )
 {
   \pause
 }{}
-    \item On activera les interruptions d'overflow du TIMER1
+    \item We need to activate the overflow TIMER1 interrupt
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
-    \item On fera compter le TIMER1 pour avoir une interruption toutes les secondes.
+    \item TIMER1 count to have interruption each second.
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
-    \item On regardera l'\'etat de la PIN associ\'ee \`a la LED pour le changer.
+    \item We look PIN LED state to change his state.
   \end{itemize}
 \end{frame}
 }
 
-\subsection{Le datasheet: la bible du programmateur bas niveau}
+\ifthenelse{\equal{\Language}{french}}
+{
+\subsection{Le datasheet: LA bible du programmateur bas niveau}
+}
+{
+\subsection{The datasheet: THE programmater low level bible }
+}
 
 \begin{frame}
   \hyperlink{http://github.com/leroilion/avr/tree/master/datasheet/Atmegaxx8.pdf}{http://github.com/leroilion/avr}
@@ -823,25 +829,49 @@ int main( void )
   \pause
 }{}
   \begin{block}{TCCR1A -- TCCR1B (page 132 -- 134)}
+\ifthenelse{\equal{\Language}{french}}
+{
     Mode normal (WGMx = 0 ), Source d'horloge (CSx = 101), Pas de comparaison (COMx = 0) 
+}
+{
+    Mode normal (WGMx = 0 ), Clock source (CSx = 101), No comparaison (COMx = 0) 
+}
   \end{block}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
   \begin{block}{TCNT1H -- TCNT1L (page 136) }
+\ifthenelse{\equal{\Language}{french}}
+{
     Incr\'ementation toute les 64$\mu$s \pause $\Longrightarrow$ Compter jusqu'\`a 15625 \pause $\Longrightarrow$ Mettre 49910 = 65535 - 15625 dans TCNT.
+}
+{
+    Incrementation all 64$\mu$s \pause $\Longrightarrow$ Count until 15625 \pause $\Longrightarrow$ Put 49910 = 65535 - 15625 in TCNT.
+}
   \end{block}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
 }{}
   \begin{block}{TIMSK1 (page 137)}
+\ifthenelse{\equal{\Language}{french}}
+{
     Activer l'interruption d'overflow \pause $\Longrightarrow$ Activer TOIE1
+}
+{
+    Activate overflow interruption \pause $\Longrightarrow$ Activate TOIE1
+}
   \end{block}
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Tu me vois, tu me vois plus}
+}
+{
+\subsection{You look me, you don't look me}
+}
 
 \lstset{language=c++} 
 \lstset{commentstyle=\textit} 
@@ -857,8 +887,16 @@ ISR( TIMER1_OVF_vect)
 { ...
 \end{lstlisting}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{A vous de jouer}
+}
+{
+\subsection{Let's play now}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
   \underline{Objectif:}\\
   Faire un programme qui permet de contr\^oler la luminosit\'e d'une LED en utilisant le PWM.\\
@@ -889,11 +927,50 @@ ISR( TIMER1_OVF_vect)
     Penser \`a g\'erer \emph{TOUS} les vecteurs d'interruption
   \end{alertblock}
 \end{frame}
+}
+{
+\begin{frame}
+  \underline{Objective:}\\
+  Create a simple program which allow to control the LED brightness. We need to use PWM.\\
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \underline{Technical details:}\\
+  \begin{itemize}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    \item Use PORTB5 as output bit (PORTB7 for arduino mega).
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    \item Use TIMER1 and fast PWM mode.
+  \end{itemize}
 
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{alertblock}{Be careful}
+    Don't forget include $<$avr/interrupt.h$>$\\
+    Do not forget \emph{all} interrupts vectors.
+  \end{alertblock}
+\end{frame}
+}
+
+\ifthenelse{\equal{\Language}{french}}
+{
 \section{Les pi\`eges \`a \'eviter}
+}
+{
+\section{Traps to avoid}
+}
 
 \begin{frame}
-  \begin{alertblock}{Les pi\`eges}
+  \begin{alertblock}{Traps}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
