@@ -449,6 +449,8 @@ xleftmargin=+0cm
 \subsection{I speak}
 }
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
 {
@@ -478,6 +480,38 @@ xleftmargin=+0cm
     PORTB \&= $\sim$( 1 $<$$<$ PORTB5 ); //Pour mettre \`a 0 
   \end{block}
 \end{frame}
+}
+{
+\begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{block}{How configure an output port ?}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    DDRB $|$= ( 1 $<$$<$ PORTB5 );
+  \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{block}{Write on port}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    PORTB $|$= ( 1 $<$$<$ PORTB5 ); //To put a high level on PORTB5\\
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    PORTB \&= $\sim$( 1 $<$$<$ PORTB5 ); //To put a low level on PORTB5
+  \end{block}
+\end{frame}
+}
 
 \ifthenelse{\equal{\Language}{french}}
 {
@@ -487,6 +521,8 @@ xleftmargin=+0cm
 \subsection{I listen}
 }
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
 \ifthenelse{\equal{\Pause}{1}}
 {
@@ -517,9 +553,50 @@ xleftmargin=+0cm
     uint8\_t etat = ( PINx \& ( 1 $<$$<$ PINxN ));
   \end{block}
 \end{frame}
+}
+{
+\begin{frame}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{block}{How to configure an input port ?}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    DDRx \&= $\sim$( 1 $<$$<$ PORTxN );
+  \end{block}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{block}{Read a port}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    PORTx $|$= ( 1 $<$$<$ PORTxN ); //To activate pull--up\\
+    PORTx \&= $\sim$( 1 $<$$<$ PORTxN ); //To desactivate pull--up\\
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    uint8\_t state = ( PINx \& ( 1 $<$$<$ PINxN ));
+  \end{block}
+\end{frame}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{A vous de jouer}
+}
+{
+\subsection{Let's play now}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
   \underline{Objectif:}\\
   Faire un programme qui \'eclaire une LED si un bouton est pouss\'e.\\
@@ -538,6 +615,27 @@ xleftmargin=+0cm
     Penser \`a rajouter l'include standard io.h
   \end{alertblock}
 \end{frame}
+}
+{
+\begin{frame}
+  \underline{Objective:}\\
+  Create a small program which light a LED when a button is press\\
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \underline{Technical details:}\\
+  Use PORTB5 as output pin (PORTB7 for arduino mega), and PORTB0 as input pin.
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \begin{alertblock}{be careful}
+    Don't forget int main() in the main file.\\
+    Don't forget standard include io.h
+  \end{alertblock}
+\end{frame}
+}
 
 \lstset{language=c++} 
 \lstset{commentstyle=\textit} 
@@ -559,14 +657,28 @@ int main( void )
 }
 \end{lstlisting} 
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \section{C'est bien, mais comment je peux faire un VRAI programme ?}
+}
+{
+\section{How create a real program ?}
+}
 
 \begin{frame}
   \tableofcontents[currentsection]
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Qu'est-ce qu'un registe ?}
+}
+{
+\subsection{What's a register?}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
   \begin{block}{}
     C'est un octet en m\'emoire\\
@@ -580,6 +692,22 @@ int main( void )
   \pause
 }{}
   \end{block}
+}
+{
+\begin{frame}
+  \begin{block}{}
+    It's an octet in RAM memory\\
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    which allow to configure the microcontroller.
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+  \end{block}
+}
 \ifthenelse{\equal{\Pause}{1}}
 {
   \pause
@@ -630,8 +758,16 @@ int main( void )
   \end{exampleblock}
 \end{frame}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \subsection{Le fil rouge}
+}
+{
+\subsection{Example}
+}
 
+\ifthenelse{\equal{\Language}{french}}
+{
 \begin{frame}
   \underline{Objectif:}\\
   Faire un programme qui fait clignoter une led en utilisant le TIMER1 sur 16 bits.\\Pour cela, on fera:\\
@@ -653,7 +789,30 @@ int main( void )
     \item On regardera l'\'etat de la PIN associ\'ee \`a la LED pour le changer.
   \end{itemize}
 \end{frame}
-
+}
+{
+\begin{frame}
+  \underline{Objective:}\\
+  \\
+  \begin{itemize}
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    \item On activera les interruptions d'overflow du TIMER1
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    \item On fera compter le TIMER1 pour avoir une interruption toutes les secondes.
+\ifthenelse{\equal{\Pause}{1}}
+{
+  \pause
+}{}
+    \item On regardera l'\'etat de la PIN associ\'ee \`a la LED pour le changer.
+  \end{itemize}
+\end{frame}
+}
 
 \subsection{Le datasheet: la bible du programmateur bas niveau}
 
