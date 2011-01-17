@@ -1,0 +1,8 @@
+Petit code de test pour faire un petit test de programmation des attiny13 (en gros, faire clignoter une diode led)
+
+
+Composition :
+
+* Script de flashage des fusible internes pour utiliser l'oscillateur interne
+* Code source Helloworld.c pour faire clignoter une diode
+* Le makefile
