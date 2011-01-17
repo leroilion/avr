@@ -12,9 +12,9 @@ int main( void )
 	while( TRUE )
 	{
 		PORTB |= ( 1 << PORT_SORTIE );
-		_delay_ms( 1 );
+		_delay_ms( 5 );
 		PORTB &= ~( 1 << PORT_SORTIE );
-		_delay_ms( 1 );
+		_delay_ms( 5 );
 	}
 	return 0;
 }

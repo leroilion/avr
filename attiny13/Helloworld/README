@@ -3,5 +3,9 @@ Petit code de test pour faire un petit test de programmation des attiny13 (en gr
 
 Composition :
 
-* Code source Helloworld.c pour faire clignoter une diode
-* Le makefile
+* Code source Helloworld.c pour faire clignoter une diode (portb3)
+* Le makefile qui
+  -all : compile
+  -clean : nettoie
+  -upload : flash la puce avec le programme
+  -fuse : flash les fusibles internes
