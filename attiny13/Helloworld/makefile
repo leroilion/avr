@@ -4,7 +4,7 @@ a.hex: a.out
 	avr-objcopy -O ihex -R .eeprom a.out a.hex
 
 a.out: helloworld.c
-	avr-gcc -Wall -O2 -mmcu=attiny13 -DF_CPU=96000000 helloworld.c -o a.out
+	avr-gcc -Wall -O2 -mmcu=attiny13 -DF_CPU=9600000 helloworld.c -o a.out
 
 clean:
 	rm -rf *.o *.hex
